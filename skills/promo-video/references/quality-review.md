@@ -9,7 +9,8 @@ between writing `clapper.config.json` and the final `npm run render`.
 1. **Render representative stills** (cheap — one frame per scene, no encode):
 
    ```bash
-   cd promo && npm run stills          # writes out/stills/<format>/<scene>.png
+   cd promo && npm run stills            # full-res png per scene (vertical + wide)
+   cd promo && npm run stills -- --review  # small jpegs (~10-30KB) for fast model/vision review
    ```
 
    It samples the mid-point of each scene for the required format (default the

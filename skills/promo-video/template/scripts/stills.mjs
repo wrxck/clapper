@@ -16,6 +16,9 @@
 // flags:
 //   --brand-only      render only one still: the first title scene (or scene 0)
 //   --format=<id>     restrict to the given format id(s); repeatable
+//   --review          small jpeg stills (scale 0.4, vertical only) for fast
+//                     visual / model review - tiny payloads that never hit an
+//                     image-size limit when read back. output under out/stills/review/.
 
 import { spawnSync } from 'node:child_process';
 import { mkdirSync, readFileSync } from 'node:fs';
@@ -28,6 +31,7 @@ const entry = 'src/index.ts';
 
 const args = process.argv.slice(2);
 const brandOnly = args.includes('--brand-only');
+const review = args.includes('--review');
 const wanted = args
   .filter((a) => a.startsWith('--format='))
   .map((a) => a.slice('--format='.length))
@@ -64,7 +68,10 @@ if (wanted.length) {
   if (missing.length) process.stderr.write(`stills: unknown format(s) ignored: ${missing.join(', ')}\n`);
   if (!formatIds.length) fail('none of the requested formats exist in the config');
 } else {
-  formatIds = DEFAULT_FORMATS.filter((id) => allFormatIds.includes(id));
+  // review mode defaults to the vertical only (the tightest layout) to keep the
+  // set small; full review still renders both extremes.
+  const base = review ? ['Vertical'] : DEFAULT_FORMATS;
+  formatIds = base.filter((id) => allFormatIds.includes(id));
   if (!formatIds.length) formatIds = [allFormatIds[0]];
 }
 
@@ -93,19 +100,17 @@ const midFrame = (i) => spans[i].from + Math.floor(spans[i].dur / 2);
 
 let rendered = 0;
 for (const fmt of formatIds) {
-  const outDir = join(root, 'out', 'stills', fmt);
+  const outDir = join(root, 'out', 'stills', review ? join('review', fmt) : fmt);
   mkdirSync(outDir, { recursive: true });
   for (const i of targets) {
     const scene = scenes[i];
     const name = brandOnly ? 'brand' : `${pad(i)}-${scene.type}`;
-    const out = join(outDir, `${name}.png`);
+    const out = join(outDir, `${name}.${review ? 'jpeg' : 'png'}`);
     const frame = midFrame(i);
     process.stderr.write(`stills: ${fmt} scene ${i + 1}/${scenes.length} (${scene.type}) @ frame ${frame}\n`);
-    const res = spawnSync(
-      'npx',
-      ['remotion', 'still', entry, fmt, out, `--frame=${frame}`],
-      { cwd: root, stdio: ['ignore', 'ignore', 'inherit'], env: process.env },
-    );
+    const stillArgs = ['remotion', 'still', entry, fmt, out, `--frame=${frame}`];
+    if (review) stillArgs.push('--image-format=jpeg', '--scale=0.4');
+    const res = spawnSync('npx', stillArgs, { cwd: root, stdio: ['ignore', 'ignore', 'inherit'], env: process.env });
     if (res.status !== 0) {
       fail(`remotion still failed for format ${fmt} scene ${i} (exit ${res.status ?? 'signal'})`);
     }

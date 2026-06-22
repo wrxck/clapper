@@ -8,6 +8,7 @@
     "ui": "vite --config ui/vite.config.ts",
     "ui:build": "vite build --config ui/vite.config.ts",
     "render": "bash render.sh",
+    "lint": "node scripts/lint-config.mjs",
     "stills": "node scripts/stills.mjs",
     "typecheck": "tsc --noEmit && tsc --noEmit -p ui/tsconfig.json"
   },

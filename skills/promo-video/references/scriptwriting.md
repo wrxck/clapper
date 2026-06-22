@@ -38,10 +38,32 @@ Drop beats the product does not need; never pad to hit a length.
   tour in repo order.
 - **Caption everything.** Most social video is watched muted; the on-screen text
   must carry the message without sound.
+- **Currency glyphs, not words.** In `pricing`, write `£3.99` / `$9` / `€5`, not
+  "3.99 pounds" / "9 dollars". Keep each pricing sub-line to a single offer (one
+  price per line) within the <= 9-word rule — do not cram a monthly price, a
+  lifetime price and a trial into one run-on sub.
+- **A `stat` is a real number.** Only use the counter scene for a number that
+  means something counted up from 0 (`2.4x`, `40%`, `12,000`). A qualitative
+  point ("zero accounts / servers / ads") is `bullets` or `title`, never a
+  `stat` with `value: 0`, and a stat `label` is a short phrase, not a sentence.
+  See the stat smells in [scenes.md](scenes.md).
 
 ## The critic pass (required)
 
 After drafting the `scenes`, review the script adversarially before rendering.
+Run it as repeated rounds — re-critique after each rewrite — and treat the
+critique as the gate, not a formality.
+
+**A round that produces zero critiques is a failure signal, not a pass.** An
+empty critique almost always means the review did not actually run (a lens
+returned nothing, the stills were not looked at, the model synthesised silence)
+rather than that the film is flawless. If a round comes back with no findings,
+do not accept it as "no issues found": re-run the review (re-render the stills,
+re-read every frame, re-apply the lenses below) and only stop once a round has
+genuinely been performed and surfaced either concrete findings or a specific,
+defensible "checked X, Y, Z — all pass" for each rubric item. Never let an empty
+round advance the film to render.
+
 Ask, honestly:
 
 - Would the first 2 seconds stop a thumb? If not, rewrite the hook.
@@ -51,6 +73,13 @@ Ask, honestly:
   remembers?
 - Is anything padding? Cut it; shorter is stronger.
 - Does it show the product actually working, or just talk about it?
+- **One idea per scene applies across the whole film, not just within a scene.**
+  Tag each beat with its theme (privacy, speed, price, feature breadth…) and count
+  them. If one theme repeats across multiple beats — e.g. privacy stated in a
+  `title`, a `stat` and a `bullets` — that is redundancy, not emphasis: keep the
+  single strongest beat for that theme and cut or re-theme the rest. As a rule of
+  thumb, no theme should own more than one beat (the product shot aside). Three of
+  eight beats all saying "on-device, no ads, own iCloud" is the canonical failure.
 
 Rewrite, then run the [quality review](quality-review.md) on the rendered stills.
 

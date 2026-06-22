@@ -35,6 +35,12 @@ export const Film: React.FC<Config> = (props) => {
   const spans = sceneFrames(config.scenes, fps);
   const captionsOn = config.captions?.enabled ?? true;
   const safeAreaDebug = Boolean(config.debugSafeArea) || envSafeArea();
+  // captions add value only where the on-screen text is not already the whole
+  // message - the visual scenes. on text-dominant scenes the headline carries it,
+  // so a caption just echoes it; suppress unless explicitly forced.
+  const CAPTION_TYPES = new Set(['device', 'stat']);
+  const showCaption = (scene: Config['scenes'][number]): boolean =>
+    captionsOn && Boolean(scene.caption) && (CAPTION_TYPES.has(scene.type) || scene.forceCaption === true);
 
   return (
     <ConfigProvider value={config}>
@@ -42,7 +48,7 @@ export const Film: React.FC<Config> = (props) => {
         <Sequence key={i} from={spans[i].from} durationInFrames={spans[i].dur}>
           <Stage glow={scene.glow}>
             <SceneView scene={scene} />
-            {captionsOn && scene.caption ? <Caption text={scene.caption} /> : null}
+            {showCaption(scene) ? <Caption text={scene.caption as string} /> : null}
             {safeAreaDebug ? <SafeAreaOverlay /> : null}
           </Stage>
         </Sequence>

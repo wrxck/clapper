@@ -72,14 +72,25 @@ One big animated counter and a label. Supports prefix/suffix and decimals.
 ```
 `value`, `prefix?`, `suffix?`, `decimals?` (0–3), `label`.
 
+The renderer animates `value` counting up from 0, so `stat` is only for a real
+number. Two smells to reject:
+- `value: 0` with empty `prefix`/`suffix` — the counter just animates a giant
+  "0", which is meaningless. A qualitative point ("zero accounts, servers, ads")
+  belongs in a `bullets` or `title` beat, not a counter.
+- a `label` that is a full sentence — it should be a short noun phrase that the
+  number completes (`"more deep-work hours in the first week"`, not
+  `"accounts, servers and ads. Your data stays with you."`). If the label runs to
+  a sentence, you wanted `bullets`/`title`.
+
 ### `pricing`
 A price hit with an optional period and a kinetic sub-line.
 
 ```json
 { "type": "pricing", "durSec": 3, "price": "Free", "period": "for 14 days",
-  "sub": "Then 6 pounds a month, cancel anytime." }
+  "sub": "Then £6 a month, cancel anytime." }
 ```
-`price`, `period?`, `sub?`.
+`price`, `period?`, `sub?`. Use the currency glyph (`£`/`$`/`€`), not the word
+("pounds"), and keep the sub to one offer per line within the <= 9-word rule.
 
 ### `cta`
 The closing card: logo, wordmark, a URL pill, and a closing line.

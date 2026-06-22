@@ -96,5 +96,7 @@ scaffolded. next:
   1. extract the brand:   node "$SCRIPT_DIR/extract-brand.mjs" "$REPO" --merge "$DEST/clapper.config.json" > /tmp/c.json && mv /tmp/c.json "$DEST/clapper.config.json"
   2. drop screenshots / logo / optional music.m4a into $DEST/public/
   3. tune the script:     cd "$DEST" && npm run ui
-  4. render deliverables: cd "$DEST" && npm run render   (needs ffmpeg on PATH)
+  4. lint the config:     cd "$DEST" && npm run lint   (flags stat/device/pricing/redundancy smells)
+  5. quality review:      cd "$DEST" && npm run stills (then look at every frame)
+  6. render deliverables: cd "$DEST" && npm run render   (needs ffmpeg on PATH)
 EOF

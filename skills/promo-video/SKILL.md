@@ -81,13 +81,19 @@ use judgement for the brand extraction and the script (the copy and scene order)
    The editor reads/writes `clapper.config.json`, so changes there and changes the
    user makes in the UI are the same data. See [references/ui.md](references/ui.md).
 
-6. **Quality review (required before rendering).** Render cheap stills and
-   actually look at them — this is the main lever for consistent, professional
-   output. Run `cd promo && npm run stills`, then inspect every frame against the
-   rubric in [references/quality-review.md](references/quality-review.md)
-   (legibility, contrast, platform safe areas, overflow, hierarchy, brand match,
-   captions). Fix `clapper.config.json` for anything that fails and re-run the
-   stills. Only render once the stills pass.
+6. **Quality review (required before rendering).** First lint the config
+   (`cd promo && npm run lint`) to catch the mechanical smells — a `stat` with
+   `value: 0` or a sentence label, a `device` beat still on the synthetic
+   dashboard, a spelled-out currency or over-long pricing sub, and a theme that
+   repeats across beats. Then render cheap stills and actually look at them — this
+   is the main lever for consistent, professional output. Run
+   `cd promo && npm run stills`, then inspect every frame against the rubric in
+   [references/quality-review.md](references/quality-review.md) (legibility,
+   contrast, platform safe areas, overflow, hierarchy, brand match, captions, and
+   that the product beat shows a real screenshot, not the dashboard). A review
+   round that surfaces nothing is a signal the review did not run — re-run it
+   rather than treating empty as a pass. Fix `clapper.config.json` for anything
+   that fails and re-run. Only render once the stills pass.
 
 7. **Render the deliverables.**
 

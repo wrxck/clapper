@@ -1,16 +1,16 @@
 {
   "brand": {
-    "name": "Driftwell",
-    "tagline": "Focus, on autopilot.",
-    "bg": "#0b0d12",
-    "surface": "#14171f",
-    "surfaceEdge": "#242935",
-    "ink": "#f3f5f9",
-    "inkMuted": "rgba(243,245,249,0.62)",
-    "inkFaint": "rgba(243,245,249,0.34)",
-    "accent": "#6ea8fe",
-    "accent2": "#9b87f5",
-    "accent3": "#5eead4",
+    "name": "Whey to Go",
+    "tagline": "Your nutrition, on your phone, nobody else's.",
+    "bg": "#0d0d0f",
+    "surface": "#161619",
+    "surfaceEdge": "#26262b",
+    "ink": "#f4f3ef",
+    "inkMuted": "rgba(244,243,239,0.62)",
+    "inkFaint": "rgba(244,243,239,0.34)",
+    "accent": "#5eead4",
+    "accent2": "#7dd3fc",
+    "accent3": "#fbbf24",
     "good": "#86efac",
     "fontDisplay": "Space Grotesk",
     "fontText": "Inter",
@@ -38,80 +38,59 @@
   "scenes": [
     {
       "type": "title",
-      "durSec": 3.2,
-      "glow": "rgba(110,168,254,0.10)",
+      "durSec": 2.6,
+      "glow": "rgba(94,234,212,0.10)",
       "showLogo": true,
-      "words": ["Driftwell"],
-      "sub": "Focus, on autopilot.",
-      "caption": "Meet Driftwell - focus, on autopilot."
-    },
-    {
-      "type": "title",
-      "durSec": 3.4,
-      "glow": "rgba(155,135,245,0.09)",
-      "words": ["Deep", "work,", "without", "the", "willpower."],
-      "caption": "Deep work, without the willpower."
+      "words": ["Whey", "to", "Go"],
+      "sub": "Nutrition tracking that stays on your phone."
     },
     {
       "type": "device",
       "durSec": 6.0,
-      "glow": "rgba(110,168,254,0.10)",
-      "frame": "dashboard",
-      "headline": "Your day, planned for you.",
-      "sub": "One calm view. Zero context-switching.",
-      "caption": "One calm view plans your whole day."
+      "glow": "rgba(94,234,212,0.10)",
+      "frame": "phone",
+      "image": "today.png",
+      "headline": "Most food apps sell your diet. This one never sees it.",
+      "sub": "Scan a barcode or describe it - logged in seconds.",
+      "caption": "Scan a barcode or describe it - logged in seconds."
     },
     {
       "type": "features",
-      "durSec": 5.6,
-      "glow": "rgba(94,234,212,0.09)",
-      "heading": "Built to keep you in flow.",
+      "durSec": 5.8,
+      "glow": "rgba(125,211,252,0.09)",
+      "heading": "Everything in one app.",
       "cards": [
-        { "icon": "bolt", "title": "Auto-blocking", "desc": "Distractions muted the moment a session starts." },
-        { "icon": "chart", "title": "Focus trends", "desc": "See your deepest hours and protect them." },
-        { "icon": "sparkle", "title": "Smart breaks", "desc": "Rests timed to how hard you have been working." }
-      ],
-      "caption": "Auto-blocking, focus trends and smart breaks."
-    },
-    {
-      "type": "stat",
-      "durSec": 3.4,
-      "glow": "rgba(110,168,254,0.10)",
-      "value": 2.4,
-      "decimals": 1,
-      "suffix": "x",
-      "label": "more deep-work hours in the first week",
-      "caption": "2.4x more deep-work hours in week one."
+        { "icon": "bolt", "title": "Training plans", "desc": "Build multi-week programmes and track every set." },
+        { "icon": "chart", "title": "Water and trends", "desc": "Hydration, weight and macros over time." },
+        { "icon": "sparkle", "title": "AI coach", "desc": "Tailored guidance that adapts to how you eat and train." }
+      ]
     },
     {
       "type": "bullets",
-      "durSec": 5.2,
-      "glow": "rgba(243,245,249,0.05)",
-      "heading": "Yours, and only yours.",
+      "durSec": 5.4,
+      "glow": "rgba(244,243,239,0.05)",
+      "heading": "Your data stays with you.",
       "items": [
-        { "icon": "eye-off", "line": "No ads. No tracking." },
-        { "icon": "lock", "line": "Encrypted, end to end." },
-        { "icon": "cloud", "line": "Syncs across your devices." }
-      ],
-      "caption": "No ads, no tracking, end-to-end encrypted."
+        { "icon": "eye-off", "line": "Zero accounts." },
+        { "icon": "device", "line": "Zero servers." },
+        { "icon": "shield", "line": "Zero ads." }
+      ]
     },
     {
       "type": "pricing",
-      "durSec": 3.0,
-      "glow": "rgba(155,135,245,0.09)",
+      "durSec": 3.2,
+      "glow": "rgba(251,191,36,0.09)",
       "price": "Free",
-      "period": "for 14 days",
-      "sub": "Then 6 pounds a month, cancel anytime.",
-      "caption": "Free for 14 days, then 6 pounds a month."
+      "period": "for 7 days",
+      "sub": "then £3.99 a month, or £49.99 for life."
     },
     {
       "type": "cta",
       "durSec": 3.6,
-      "glow": "rgba(110,168,254,0.10)",
+      "glow": "rgba(94,234,212,0.10)",
       "showLogo": true,
-      "url": "driftwell.app",
-      "line": "Start your first deep-work session today.",
-      "caption": "Start today at driftwell.app."
+      "url": "wheytogo.app",
+      "line": "Track your nutrition without giving it away."
     }
   ]
 }

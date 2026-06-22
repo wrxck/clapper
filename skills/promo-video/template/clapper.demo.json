@@ -1,0 +1,117 @@
+{
+  "brand": {
+    "name": "Driftwell",
+    "tagline": "Focus, on autopilot.",
+    "bg": "#0b0d12",
+    "surface": "#14171f",
+    "surfaceEdge": "#242935",
+    "ink": "#f3f5f9",
+    "inkMuted": "rgba(243,245,249,0.62)",
+    "inkFaint": "rgba(243,245,249,0.34)",
+    "accent": "#6ea8fe",
+    "accent2": "#9b87f5",
+    "accent3": "#5eead4",
+    "good": "#86efac",
+    "fontDisplay": "Space Grotesk",
+    "fontText": "Inter",
+    "fonts": [
+      { "family": "Space Grotesk", "url": "fonts/space-grotesk-latin-var.woff2", "weight": "300 700" },
+      { "family": "Inter", "url": "fonts/inter-latin-var.woff2", "weight": "100 900" }
+    ],
+    "logo": {
+      "type": "paths",
+      "src": [
+        "M4 14c4-8 12-8 16 0",
+        "M4 18c4-8 12-8 16 0",
+        "M12 4v4"
+      ]
+    }
+  },
+  "fps": 30,
+  "formats": [
+    { "id": "Wide", "label": "16:9 youtube / x / linkedin", "width": 1920, "height": 1080 },
+    { "id": "Vertical", "label": "9:16 tiktok / reels / shorts", "width": 1080, "height": 1920 },
+    { "id": "Square", "label": "1:1 instagram feed", "width": 1080, "height": 1080 },
+    { "id": "Portrait", "label": "4:5 instagram portrait", "width": 1080, "height": 1350 }
+  ],
+  "captions": { "enabled": true },
+  "scenes": [
+    {
+      "type": "title",
+      "durSec": 3.2,
+      "glow": "rgba(110,168,254,0.10)",
+      "showLogo": true,
+      "words": ["Driftwell"],
+      "sub": "Focus, on autopilot.",
+      "caption": "Meet Driftwell - focus, on autopilot."
+    },
+    {
+      "type": "title",
+      "durSec": 3.4,
+      "glow": "rgba(155,135,245,0.09)",
+      "words": ["Deep", "work,", "without", "the", "willpower."],
+      "caption": "Deep work, without the willpower."
+    },
+    {
+      "type": "device",
+      "durSec": 6.0,
+      "glow": "rgba(110,168,254,0.10)",
+      "frame": "dashboard",
+      "headline": "Your day, planned for you.",
+      "sub": "One calm view. Zero context-switching.",
+      "caption": "One calm view plans your whole day."
+    },
+    {
+      "type": "features",
+      "durSec": 5.6,
+      "glow": "rgba(94,234,212,0.09)",
+      "heading": "Built to keep you in flow.",
+      "cards": [
+        { "icon": "bolt", "title": "Auto-blocking", "desc": "Distractions muted the moment a session starts." },
+        { "icon": "chart", "title": "Focus trends", "desc": "See your deepest hours and protect them." },
+        { "icon": "sparkle", "title": "Smart breaks", "desc": "Rests timed to how hard you have been working." }
+      ],
+      "caption": "Auto-blocking, focus trends and smart breaks."
+    },
+    {
+      "type": "stat",
+      "durSec": 3.4,
+      "glow": "rgba(110,168,254,0.10)",
+      "value": 2.4,
+      "decimals": 1,
+      "suffix": "x",
+      "label": "more deep-work hours in the first week",
+      "caption": "2.4x more deep-work hours in week one."
+    },
+    {
+      "type": "bullets",
+      "durSec": 5.2,
+      "glow": "rgba(243,245,249,0.05)",
+      "heading": "Yours, and only yours.",
+      "items": [
+        { "icon": "eye-off", "line": "No ads. No tracking." },
+        { "icon": "lock", "line": "Encrypted, end to end." },
+        { "icon": "cloud", "line": "Syncs across your devices." }
+      ],
+      "caption": "No ads, no tracking, end-to-end encrypted."
+    },
+    {
+      "type": "pricing",
+      "durSec": 3.0,
+      "glow": "rgba(155,135,245,0.09)",
+      "price": "Free",
+      "period": "for 14 days",
+      "sub": "Then 6 pounds a month, cancel anytime.",
+      "caption": "Free for 14 days, then 6 pounds a month."
+    },
+    {
+      "type": "cta",
+      "durSec": 3.6,
+      "glow": "rgba(110,168,254,0.10)",
+      "showLogo": true,
+      "url": "driftwell.app",
+      "line": "Start your first deep-work session today.",
+      "caption": "Start today at driftwell.app."
+    }
+  ]
+}

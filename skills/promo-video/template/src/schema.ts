@@ -70,8 +70,13 @@ const sceneBase = {
   // optional per-scene glow tint for the stage backdrop.
   glow: zColor().optional(),
   // optional sound-off caption, pinned in the lower safe zone with a scrim so it
-  // stays legible on muted feeds. applies to every scene type.
+  // stays legible on muted feeds. by default it only renders on the visual
+  // scenes (device, stat) where the on-screen text is not already the message;
+  // on text-dominant scenes (title, bullets, features, pricing, cta) the headline
+  // carries it, so a caption there is redundant clutter and is suppressed. set
+  // forceCaption to render it anyway.
   caption: z.string().optional(),
+  forceCaption: z.boolean().optional(),
 };
 
 export const titleSceneSchema = z.object({

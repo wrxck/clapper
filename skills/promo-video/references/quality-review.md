@@ -42,6 +42,15 @@ For each still, check:
   generic template? If the palette feels off, fix `brand` first.
 - **Captions present** — for muted viewing, the spoken/headline message is
   legible on screen (see the `caption` field in [scenes.md](scenes.md)).
+- **Real product on the product beat** — the `device` scene is the heart of the
+  promo (see [scriptwriting.md](scriptwriting.md)). If it renders the built-in
+  synthetic dashboard instead of an actual screenshot of *this* app, flag it:
+  "product beat is the synthetic dashboard, not a real screenshot". That happens
+  when `frame: "dashboard"` with no `image`, or when `promo/public/` has no
+  screenshots to point at. Fix it before rendering — drop a real capture into
+  `promo/public/` and set `frame: "phone"` (or `"browser"`) with
+  `image: "<file>.png"`. The synthetic dashboard is a scaffolding placeholder
+  only; shipping it means the film never actually shows the product.
 
 ## Brand preview (do this once, up front)
 

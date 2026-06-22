@@ -1,0 +1,29 @@
+{
+  "name": "clapper-promo",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "ui": "vite --config ui/vite.config.ts",
+    "ui:build": "vite build --config ui/vite.config.ts",
+    "render": "bash render.sh",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p ui/tsconfig.json"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.482",
+    "@remotion/player": "4.0.482",
+    "@remotion/zod-types": "4.0.482",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "remotion": "4.0.482",
+    "zod": "4.3.6"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.2",
+    "typescript": "5.9.3",
+    "vite": "8.0.16"
+  }
+}

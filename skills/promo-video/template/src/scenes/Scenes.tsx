@@ -66,7 +66,7 @@ export const BulletsView: React.FC<{ scene: BulletsScene }> = ({ scene }) => {
       {scene.heading ? (
         <Kinetic words={scene.heading.split(' ')} size={portrait ? u(70) : u(84)} delay={2} />
       ) : null}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: u(40) }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: u(40) }}>
         {scene.items.map((row, i) => {
           const p = settle(frame, fps, (scene.heading ? 16 : 6) + i * 14);
           return (
@@ -81,7 +81,7 @@ export const BulletsView: React.FC<{ scene: BulletsScene }> = ({ scene }) => {
                 filter: p < 0.98 ? `blur(${(1 - p) * 10}px)` : undefined,
               }}
             >
-              <Icon name={row.icon} size={size * 0.92} colour={brand.accent} />
+              <Icon name={row.icon} size={size * 1.1} colour={brand.accent} />
               <span
                 style={{
                   fontFamily: display,
@@ -119,7 +119,9 @@ export const FeaturesView: React.FC<{ scene: FeaturesScene }> = ({ scene }) => {
 export const DeviceView: React.FC<{ scene: DeviceScene }> = ({ scene }) => {
   const { u, portrait, square, safe } = useFrame();
   const variant = scene.frame;
-  const phoneW = portrait ? u(440) : square ? u(380) : u(400);
+  // scale the phone up so at least the hero metric on the screenshot is legible
+  // at thumb scale (a full-dashboard shrink reads as illegible mush).
+  const phoneW = portrait ? u(520) : square ? u(460) : u(480);
   const browserW = portrait ? u(660) : square ? u(720) : u(900);
   const width = variant === 'browser' ? browserW : phoneW;
 
@@ -211,15 +213,16 @@ export const StatView: React.FC<{ scene: StatScene }> = ({ scene }) => {
 // ---- pricing ----
 export const PricingView: React.FC<{ scene: PricingScene }> = ({ scene }) => {
   const brand = useBrand();
-  const { display } = useFonts();
+  const { display, text } = useFonts();
   const fr = useFrame();
   const { u, portrait } = fr;
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const p = settle(frame, fps, 4);
   const periodP = settle(frame, fps, 16);
+  const noteP = settle(frame, fps, 34);
   return (
-    <AbsoluteFill style={{ ...centre, gap: u(20), ...safePadding(fr, u(60)) }}>
+    <AbsoluteFill style={{ ...centre, gap: u(28), ...safePadding(fr, u(60)) }}>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: u(14) }}>
         <span
           style={{
@@ -249,13 +252,33 @@ export const PricingView: React.FC<{ scene: PricingScene }> = ({ scene }) => {
         ) : null}
       </div>
       {scene.sub ? (
+        // the real price line: kept near-white (not dim grey) so it is the most
+        // legible element on this conversion-critical frame.
         <Kinetic
           words={scene.sub.split(' ')}
-          size={portrait ? u(46) : u(54)}
+          size={portrait ? u(48) : u(58)}
           delay={22}
-          colour={brand.inkMuted}
-          weight={500}
+          colour={brand.ink}
+          weight={560}
         />
+      ) : null}
+      {scene.note ? (
+        // a quiet supporting line in the lower third so the price block has an
+        // anchor and the frame is not bottom-heavy over dead space.
+        <div
+          style={{
+            fontFamily: text,
+            fontSize: portrait ? u(30) : u(34),
+            fontWeight: 480,
+            letterSpacing: '-0.01em',
+            color: brand.inkFaint,
+            textAlign: 'center',
+            opacity: noteP,
+            transform: `translateY(${(1 - noteP) * u(18)}px)`,
+          }}
+        >
+          {scene.note}
+        </div>
       ) : null}
     </AbsoluteFill>
   );

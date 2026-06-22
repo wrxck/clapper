@@ -133,6 +133,10 @@ export const pricingSceneSchema = z.object({
   price: z.string(),
   period: z.string().optional(),
   sub: z.string().optional(),
+  // a quiet supporting line anchored in the lower third (e.g. "Cancel anytime")
+  // so the price block does not sit alone over dead space on the most
+  // conversion-critical frame.
+  note: z.string().optional(),
 });
 
 export const ctaSceneSchema = z.object({

@@ -6,7 +6,7 @@
     "surface": "#161619",
     "surfaceEdge": "#26262b",
     "ink": "#f4f3ef",
-    "inkMuted": "rgba(244,243,239,0.62)",
+    "inkMuted": "rgba(244,243,239,0.75)",
     "inkFaint": "rgba(244,243,239,0.34)",
     "accent": "#5eead4",
     "accent2": "#7dd3fc",
@@ -51,14 +51,13 @@
       "frame": "phone",
       "image": "today.png",
       "headline": "Most food apps sell your diet. This one never sees it.",
-      "sub": "Scan a barcode or describe it - logged in seconds.",
-      "caption": "Scan a barcode or describe it - logged in seconds."
+      "sub": "Scan a barcode or describe it — logged in seconds."
     },
     {
       "type": "features",
       "durSec": 5.8,
       "glow": "rgba(125,211,252,0.09)",
-      "heading": "Everything in one app.",
+      "heading": "Train, eat, improve.",
       "cards": [
         { "icon": "bolt", "title": "Training plans", "desc": "Build multi-week programmes and track every set." },
         { "icon": "chart", "title": "Water and trends", "desc": "Hydration, weight and macros over time." },
@@ -79,10 +78,11 @@
     {
       "type": "pricing",
       "durSec": 3.2,
-      "glow": "rgba(251,191,36,0.09)",
+      "glow": "rgba(94,234,212,0.10)",
       "price": "Free",
       "period": "for 7 days",
-      "sub": "then £3.99 a month, or £49.99 for life."
+      "sub": "then £3.99/mo or £29/yr",
+      "note": "Cancel anytime."
     },
     {
       "type": "cta",

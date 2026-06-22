@@ -96,7 +96,27 @@ if (brandOnly) {
 }
 
 const pad = (n) => String(n + 1).padStart(2, '0');
-const midFrame = (i) => spans[i].from + Math.floor(spans[i].dur / 2);
+
+// pick a settled hold frame, not the geometric midpoint. the kinetic headlines,
+// the logo stroke-on and the price line all reveal word-by-word over the first
+// ~30-50 frames of a scene; sampling at the raw midpoint catches them mid-reveal
+// (a greyed/two-tone wordmark, an open-vs-closed logo arc, a motion-blurred price)
+// which reads as a composition defect when it is only a reveal artefact. so we
+// bias the sample late: past a settle margin from the start, but clear of the
+// final exit transition (the stage fades/blurs out over the last ~12 frames).
+const EXIT_LEN = 12;
+const SETTLE_MARGIN = 56; // frames: clears the longest per-word reveal + tail
+const holdFrame = (i) => {
+  const { from, dur } = spans[i];
+  const mid = from + Math.floor(dur / 2);
+  // latest frame that is still before the exit starts (with a small guard).
+  const beforeExit = from + dur - EXIT_LEN - 4;
+  const settled = from + Math.min(SETTLE_MARGIN, dur - 1);
+  // take the later of midpoint and settle margin, then clamp before the exit; if
+  // the scene is too short to clear the reveal, fall back to its last held frame.
+  const target = Math.max(mid, settled);
+  return Math.max(from, Math.min(target, Math.max(from, beforeExit)));
+};
 
 let rendered = 0;
 for (const fmt of formatIds) {
@@ -106,7 +126,7 @@ for (const fmt of formatIds) {
     const scene = scenes[i];
     const name = brandOnly ? 'brand' : `${pad(i)}-${scene.type}`;
     const out = join(outDir, `${name}.${review ? 'jpeg' : 'png'}`);
-    const frame = midFrame(i);
+    const frame = holdFrame(i);
     process.stderr.write(`stills: ${fmt} scene ${i + 1}/${scenes.length} (${scene.type}) @ frame ${frame}\n`);
     const stillArgs = ['remotion', 'still', entry, fmt, out, `--frame=${frame}`];
     if (review) stillArgs.push('--image-format=jpeg', '--scale=0.4');

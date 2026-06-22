@@ -27,13 +27,13 @@ export const blankScene = (type: SceneType): Scene => {
     case 'title':
       return { type, durSec: 3, words: ['New', 'title'], sub: '' };
     case 'bullets':
-      return { type, durSec: 4, heading: 'Heading', items: [{ icon: 'check', line: 'A point.' }] };
+      return { type, durSec: 4, heading: 'Heading', items: [{ icon: 'shield', line: 'A point.' }] };
     case 'features':
       return {
         type,
         durSec: 5,
         heading: 'Features',
-        cards: [{ icon: 'bolt', title: 'Title', desc: 'Description.' }],
+        cards: [{ icon: 'sparkles', title: 'Title', desc: 'Description.' }],
       };
     case 'device':
       return { type, durSec: 5, frame: 'phone', headline: 'Headline', sub: '' };
@@ -125,7 +125,7 @@ export const SceneEditor: React.FC<{
                 </button>
               </div>
             ))}
-            <button type="button" onClick={() => set({ items: [...scene.items, { icon: 'check', line: 'A point.' }] })}>
+            <button type="button" onClick={() => set({ items: [...scene.items, { icon: 'shield', line: 'A point.' }] })}>
               add item
             </button>
           </>
@@ -159,7 +159,7 @@ export const SceneEditor: React.FC<{
                 </button>
               </div>
             ))}
-            <button type="button" onClick={() => set({ cards: [...scene.cards, { icon: 'bolt', title: 'Title', desc: 'Desc.' }] })}>
+            <button type="button" onClick={() => set({ cards: [...scene.cards, { icon: 'sparkles', title: 'Title', desc: 'Desc.' }] })}>
               add card
             </button>
           </>

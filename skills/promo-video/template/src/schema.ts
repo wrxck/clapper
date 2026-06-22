@@ -47,20 +47,21 @@ export const formatSchema = z.object({
   height: z.number().int().positive(),
 });
 
-// the icon names the inline icon set understands (see components/Icons.tsx).
+// the icon names the hugeicons glyph set understands (see components/Icons.tsx).
+// each maps to a real codepoint in the hgi-stroke-rounded font.
 export const iconNameSchema = z.enum([
-  'check',
-  'lock',
-  'bolt',
+  'dumbbell',
+  'droplet',
+  'analytics',
+  'restaurant',
+  'sparkles',
+  'viewOff',
   'cloud',
-  'chart',
   'shield',
-  'eye-off',
-  'sparkle',
-  'star',
-  'heart',
-  'globe',
-  'device',
+  'lock',
+  'scale',
+  'timer',
+  'chart',
 ]);
 
 // ---- scenes: a discriminated union of typed beats ----

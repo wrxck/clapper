@@ -16,7 +16,8 @@
     "fontText": "Inter",
     "fonts": [
       { "family": "Space Grotesk", "url": "fonts/space-grotesk-latin-var.woff2", "weight": "300 700" },
-      { "family": "Inter", "url": "fonts/inter-latin-var.woff2", "weight": "100 900" }
+      { "family": "Inter", "url": "fonts/inter-latin-var.woff2", "weight": "100 900" },
+      { "family": "hgi-stroke-rounded", "url": "fonts/hgi-stroke-rounded.woff2" }
     ],
     "logo": {
       "type": "paths",
@@ -59,9 +60,9 @@
       "glow": "rgba(125,211,252,0.09)",
       "heading": "Train, eat, improve.",
       "cards": [
-        { "icon": "bolt", "title": "Training plans", "desc": "Build multi-week programmes and track every set." },
-        { "icon": "chart", "title": "Water and trends", "desc": "Hydration, weight and macros over time." },
-        { "icon": "sparkle", "title": "AI coach", "desc": "Tailored guidance that adapts to how you eat and train." }
+        { "icon": "dumbbell", "title": "Training plans", "desc": "Build multi-week programmes and track every set." },
+        { "icon": "droplet", "title": "Water and trends", "desc": "Hydration, weight and macros over time." },
+        { "icon": "sparkles", "title": "AI coach", "desc": "Tailored guidance that adapts to how you eat and train." }
       ]
     },
     {
@@ -70,8 +71,8 @@
       "glow": "rgba(244,243,239,0.05)",
       "heading": "Your data stays with you.",
       "items": [
-        { "icon": "eye-off", "line": "Zero accounts." },
-        { "icon": "device", "line": "Zero servers." },
+        { "icon": "viewOff", "line": "Zero accounts." },
+        { "icon": "cloud", "line": "Zero servers." },
         { "icon": "shield", "line": "Zero ads." }
       ]
     },

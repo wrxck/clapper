@@ -16,7 +16,8 @@
     "fontText": "Inter",
     "fonts": [
       { "family": "Space Grotesk", "url": "fonts/space-grotesk-latin-var.woff2", "weight": "300 700" },
-      { "family": "Inter", "url": "fonts/inter-latin-var.woff2", "weight": "100 900" }
+      { "family": "Inter", "url": "fonts/inter-latin-var.woff2", "weight": "100 900" },
+      { "family": "hgi-stroke-rounded", "url": "fonts/hgi-stroke-rounded.woff2" }
     ],
     "logo": {
       "type": "paths",
@@ -67,9 +68,9 @@
       "glow": "rgba(94,234,212,0.09)",
       "heading": "Built to keep you in flow.",
       "cards": [
-        { "icon": "bolt", "title": "Auto-blocking", "desc": "Distractions muted the moment a session starts." },
-        { "icon": "chart", "title": "Focus trends", "desc": "See your deepest hours and protect them." },
-        { "icon": "sparkle", "title": "Smart breaks", "desc": "Rests timed to how hard you have been working." }
+        { "icon": "timer", "title": "Auto-blocking", "desc": "Distractions muted the moment a session starts." },
+        { "icon": "analytics", "title": "Focus trends", "desc": "See your deepest hours and protect them." },
+        { "icon": "sparkles", "title": "Smart breaks", "desc": "Rests timed to how hard you have been working." }
       ],
       "caption": "Auto-blocking, focus trends and smart breaks."
     },
@@ -89,7 +90,7 @@
       "glow": "rgba(243,245,249,0.05)",
       "heading": "Yours, and only yours.",
       "items": [
-        { "icon": "eye-off", "line": "No ads. No tracking." },
+        { "icon": "viewOff", "line": "No ads. No tracking." },
         { "icon": "lock", "line": "Encrypted, end to end." },
         { "icon": "cloud", "line": "Syncs across your devices." }
       ],

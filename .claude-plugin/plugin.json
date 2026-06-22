@@ -1,0 +1,10 @@
+{
+  "name": "clapper",
+  "description": "Turn any repo into rich, brand-matched promo videos. Scaffolds a config-driven Remotion + ffmpeg pipeline, inherits the repo's colours, fonts, logo and copy, and renders multiple aspect ratios (16:9, 9:16, 1:1, 4:5) with a live in-browser tuning UI.",
+  "version": "0.1.0",
+  "author": { "name": "Matt Hesketh" },
+  "homepage": "https://github.com/wrxck/clapper",
+  "repository": "https://github.com/wrxck/clapper",
+  "license": "MIT",
+  "keywords": ["video", "remotion", "ffmpeg", "marketing", "promo", "branding", "social"]
+}

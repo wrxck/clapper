@@ -1,0 +1,15 @@
+{
+  "name": "clapper",
+  "owner": { "name": "Matt Hesketh", "url": "https://github.com/wrxck" },
+  "metadata": {
+    "description": "Clapper — brand-matched promo videos from any repo, as a Claude skill.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "clapper",
+      "source": "./",
+      "description": "Scaffold + render multi-format promo videos that inherit your repo's brand (Remotion + ffmpeg) with a live tuning UI."
+    }
+  ]
+}

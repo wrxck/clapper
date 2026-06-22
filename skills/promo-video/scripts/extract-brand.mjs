@@ -83,6 +83,49 @@ const isColour = (v) =>
   /^(rgb|rgba|hsl|hsla|oklch|oklab)\(/i.test(v) ||
   /^[a-z]{3,}$/i.test(v); // named (rare)
 
+// ---- contrast (wcag) ----
+// parse the rgb of a colour we can reason about (hex or rgb/rgba). returns null
+// for colour spaces we will not compute (hsl/oklch/named) - the caller then keeps
+// the value as-is rather than guessing wrong.
+const toRgb = (v) => {
+  if (!v) return null;
+  const s = v.trim();
+  const hex = s.match(/^#([0-9a-f]{3}|[0-9a-f]{4}|[0-9a-f]{6}|[0-9a-f]{8})$/i);
+  if (hex) {
+    let h = hex[1];
+    if (h.length === 3 || h.length === 4) h = h.split('').map((c) => c + c).join('');
+    const r = parseInt(h.slice(0, 2), 16);
+    const g = parseInt(h.slice(2, 4), 16);
+    const b = parseInt(h.slice(4, 6), 16);
+    return { r, g, b };
+  }
+  const rgb = s.match(/^rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)/i);
+  if (rgb) return { r: +rgb[1], g: +rgb[2], b: +rgb[3] };
+  return null;
+};
+
+// relative luminance per wcag 2.x.
+const luminance = ({ r, g, b }) => {
+  const f = (c) => {
+    const s = c / 255;
+    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+  };
+  return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+};
+
+// contrast ratio between two parsed rgb colours (1..21).
+const contrastRatio = (a, b) => {
+  const la = luminance(a);
+  const lb = luminance(b);
+  const hi = Math.max(la, lb);
+  const lo = Math.min(la, lb);
+  return (hi + 0.05) / (lo + 0.05);
+};
+
+// build an rgba() string at a given alpha from a parsed rgb (used to derive the
+// muted/faint inks as safe opacities of the chosen ink).
+const rgba = ({ r, g, b }, a) => `rgba(${Math.round(r)},${Math.round(g)},${Math.round(b)},${a})`;
+
 // gather css custom properties from declarations like `--name: value;`.
 const customProps = new Map(); // name -> value (last wins, like the cascade)
 const varRefs = new Map(); // name -> count of references (popularity)
@@ -345,7 +388,51 @@ if (inkPick) note('found', `ink from --${inkPick.name}: ${inkPick.value}`);
 else note('guess', 'ink not found; using near-white');
 if (!accent2Pick) note('guess', 'accent2 guessed');
 if (!accent3Pick) note('guess', 'accent3 guessed');
-note('guess', 'surface / surfaceEdge / inkMuted / inkFaint derived for the dark stage; tweak if your brand is light');
+
+// ---- enforce wcag contrast of ink on bg ----
+// body copy needs >= 4.5:1. if the chosen ink fails on the chosen bg, swap to a
+// safe near-white or near-black (whichever the bg calls for) and report the
+// before/after ratio. colours we cannot parse (hsl/oklch/named) are left as-is
+// with a note rather than guessed at.
+const NEAR_WHITE = '#f3f5f9';
+const NEAR_BLACK = '#0b0d12';
+const MIN_CONTRAST = 4.5;
+
+const bgRgb = toRgb(palette.bg);
+let inkRgb = toRgb(palette.ink);
+
+if (bgRgb && inkRgb) {
+  const before = contrastRatio(inkRgb, bgRgb);
+  if (before < MIN_CONTRAST) {
+    // pick the polar ink that gives the most contrast against this bg.
+    const whiteR = contrastRatio(toRgb(NEAR_WHITE), bgRgb);
+    const blackR = contrastRatio(toRgb(NEAR_BLACK), bgRgb);
+    const safe = whiteR >= blackR ? NEAR_WHITE : NEAR_BLACK;
+    palette.ink = safe;
+    inkRgb = toRgb(safe);
+    const after = contrastRatio(inkRgb, bgRgb);
+    note(
+      'guess',
+      `ink contrast on bg was ${before.toFixed(2)}:1 (< ${MIN_CONTRAST}:1); adjusted ink to ${safe} (now ${after.toFixed(2)}:1)`,
+    );
+  } else {
+    note('found', `ink contrast on bg is ${before.toFixed(2)}:1 (passes ${MIN_CONTRAST}:1)`);
+  }
+} else if (bgPick || inkPick) {
+  note('guess', 'ink/bg in a colour space we do not compute (hsl/oklch/named); verify contrast manually');
+}
+
+// ---- derive inkMuted / inkFaint as safe opacities of the chosen ink ----
+// when ink is a parseable colour, build the muted/faint tiers from it so they
+// always belong to the same hue; otherwise keep the kit defaults.
+if (inkRgb) {
+  palette.inkMuted = rgba(inkRgb, 0.62);
+  palette.inkFaint = rgba(inkRgb, 0.34);
+  note('found', 'inkMuted / inkFaint derived as 62% / 34% opacities of ink');
+} else {
+  note('guess', 'inkMuted / inkFaint kept as kit defaults (ink not parseable for derivation)');
+}
+note('guess', 'surface / surfaceEdge derived for the dark stage; tweak if your brand is light');
 
 // ---- font entries for the config (only those with a usable url) ----
 const fontEntries = [];
@@ -354,12 +441,25 @@ for (const f of fonts) {
     // keep absolute urls; bare/relative urls become public/ paths by basename.
     const url = /^(https?:)?\/\//.test(f.url) ? f.url : `fonts/${basename(f.url)}`;
     fontEntries.push({ family: f.family, url });
+  } else {
+    // an @font-face family with no url() we could parse: it will not load.
+    note('guess', `font "${f.family}" detected with no resolvable url; supply a woff2 (brand.fonts url -> fonts/<file>.woff2 under public/fonts/) or the film falls back`);
   }
 }
 for (const fam of googleFamilies) {
   // a google-font family with no concrete url: leave a note rather than a dead url.
   if (!fontEntries.some((e) => e.family === fam)) {
     note('guess', `google font "${fam}" detected but no woff2 url resolved; add a brand.fonts url or self-host into public/fonts/`);
+  }
+}
+
+// flag the chosen display/text families if neither an entry nor a google family
+// backs them with a usable face - so the user knows to supply a woff2.
+const hasFace = (fam) =>
+  fontEntries.some((e) => e.family === fam) || googleFamilies.includes(fam);
+for (const [role, fam] of [['fontDisplay', fontDisplay], ['fontText', fontText]]) {
+  if (fam && !hasFace(fam)) {
+    note('guess', `${role} "${fam}" has no self-host/url; add a brand.fonts entry (woff2 under public/fonts/) or it will render with the system fallback stack`);
   }
 }
 

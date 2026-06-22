@@ -14,7 +14,7 @@ import { Counter } from '../components/Motion';
 import { Kinetic, Sub } from '../components/Type';
 import { useBrand, useFonts } from '../lib/context';
 import { settle } from '../lib/anim';
-import { useFrame } from '../lib/layout';
+import { safePadding, useFrame } from '../lib/layout';
 import type {
   BulletsScene,
   CtaScene,
@@ -35,9 +35,10 @@ const centre: React.CSSProperties = {
 
 // ---- title ----
 export const TitleView: React.FC<{ scene: TitleScene }> = ({ scene }) => {
-  const { u, portrait } = useFrame();
+  const frame = useFrame();
+  const { u, portrait } = frame;
   return (
-    <AbsoluteFill style={{ ...centre, gap: u(30), padding: u(60) }}>
+    <AbsoluteFill style={{ ...centre, gap: u(30), ...safePadding(frame, u(60)) }}>
       {scene.showLogo ? <Mark size={u(150)} delay={2} /> : null}
       <Kinetic
         words={scene.words}
@@ -55,12 +56,13 @@ export const TitleView: React.FC<{ scene: TitleScene }> = ({ scene }) => {
 export const BulletsView: React.FC<{ scene: BulletsScene }> = ({ scene }) => {
   const brand = useBrand();
   const { display } = useFonts();
-  const { u, portrait } = useFrame();
+  const fr = useFrame();
+  const { u, portrait } = fr;
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const size = portrait ? u(54) : u(62);
   return (
-    <AbsoluteFill style={{ ...centre, gap: u(50), padding: u(70) }}>
+    <AbsoluteFill style={{ ...centre, gap: u(50), ...safePadding(fr, u(70)) }}>
       {scene.heading ? (
         <Kinetic words={scene.heading.split(' ')} size={portrait ? u(70) : u(84)} delay={2} />
       ) : null}
@@ -101,9 +103,10 @@ export const BulletsView: React.FC<{ scene: BulletsScene }> = ({ scene }) => {
 
 // ---- features ----
 export const FeaturesView: React.FC<{ scene: FeaturesScene }> = ({ scene }) => {
-  const { u, portrait } = useFrame();
+  const fr = useFrame();
+  const { u, portrait } = fr;
   return (
-    <AbsoluteFill style={{ ...centre, gap: u(54), padding: u(60) }}>
+    <AbsoluteFill style={{ ...centre, gap: u(54), ...safePadding(fr, u(60)) }}>
       {scene.heading ? (
         <Kinetic words={scene.heading.split(' ')} size={portrait ? u(68) : u(80)} delay={2} />
       ) : null}
@@ -114,24 +117,35 @@ export const FeaturesView: React.FC<{ scene: FeaturesScene }> = ({ scene }) => {
 
 // ---- device ----
 export const DeviceView: React.FC<{ scene: DeviceScene }> = ({ scene }) => {
-  const { u, portrait, square } = useFrame();
+  const { u, portrait, square, safe } = useFrame();
   const variant = scene.frame;
   const phoneW = portrait ? u(440) : square ? u(380) : u(400);
   const browserW = portrait ? u(660) : square ? u(720) : u(900);
   const width = variant === 'browser' ? browserW : phoneW;
 
-  const copy = scene.caption ? (
+  const copy = scene.headline ? (
     <div style={{ display: 'flex', flexDirection: 'column', gap: u(16), alignItems: 'center' }}>
-      <Kinetic words={scene.caption.split(' ')} size={portrait || square ? u(62) : u(74)} delay={2} />
+      <Kinetic words={scene.headline.split(' ')} size={portrait || square ? u(62) : u(74)} delay={2} />
       {scene.sub ? <Sub text={scene.sub} size={u(30)} delay={16} /> : null}
     </div>
   ) : null;
 
+  // centre the device + copy vertically in the available shell, biasing slightly
+  // up so a pinned caption never collides with it.
   const device = <Frame width={width} variant={variant} image={scene.image} enterDelay={8} />;
 
   if (portrait || square || variant === 'browser') {
     return (
-      <AbsoluteFill style={{ ...centre, gap: u(44), padding: u(46) }}>
+      <AbsoluteFill
+        style={{
+          ...centre,
+          gap: u(44),
+          paddingTop: safe.top + u(46),
+          paddingBottom: safe.bottom + u(46),
+          paddingLeft: safe.left + u(46),
+          paddingRight: safe.right + u(46),
+        }}
+      >
         {copy}
         {device}
       </AbsoluteFill>
@@ -139,7 +153,15 @@ export const DeviceView: React.FC<{ scene: DeviceScene }> = ({ scene }) => {
   }
   return (
     <AbsoluteFill
-      style={{ ...centre, flexDirection: 'row', gap: u(110), padding: u(60) }}
+      style={{
+        ...centre,
+        flexDirection: 'row',
+        gap: u(110),
+        paddingTop: safe.top + u(60),
+        paddingBottom: safe.bottom + u(60),
+        paddingLeft: safe.left + u(60),
+        paddingRight: safe.right + u(60),
+      }}
     >
       {copy}
       {device}
@@ -151,12 +173,13 @@ export const DeviceView: React.FC<{ scene: DeviceScene }> = ({ scene }) => {
 export const StatView: React.FC<{ scene: StatScene }> = ({ scene }) => {
   const brand = useBrand();
   const { text } = useFonts();
-  const { u, portrait } = useFrame();
+  const fr = useFrame();
+  const { u, portrait } = fr;
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const labelP = settle(frame, fps, 24);
   return (
-    <AbsoluteFill style={{ ...centre, gap: u(18), padding: u(60) }}>
+    <AbsoluteFill style={{ ...centre, gap: u(18), ...safePadding(fr, u(60)) }}>
       <Counter
         to={scene.value}
         start={6}
@@ -189,13 +212,14 @@ export const StatView: React.FC<{ scene: StatScene }> = ({ scene }) => {
 export const PricingView: React.FC<{ scene: PricingScene }> = ({ scene }) => {
   const brand = useBrand();
   const { display } = useFonts();
-  const { u, portrait } = useFrame();
+  const fr = useFrame();
+  const { u, portrait } = fr;
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const p = settle(frame, fps, 4);
   const periodP = settle(frame, fps, 16);
   return (
-    <AbsoluteFill style={{ ...centre, gap: u(20), padding: u(60) }}>
+    <AbsoluteFill style={{ ...centre, gap: u(20), ...safePadding(fr, u(60)) }}>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: u(14) }}>
         <span
           style={{
@@ -241,14 +265,15 @@ export const PricingView: React.FC<{ scene: PricingScene }> = ({ scene }) => {
 export const CtaView: React.FC<{ scene: CtaScene }> = ({ scene }) => {
   const brand = useBrand();
   const { display, text } = useFonts();
-  const { u } = useFrame();
+  const fr = useFrame();
+  const { u } = fr;
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const showLogo = scene.showLogo ?? true;
   const nameP = settle(frame, fps, 14);
   const urlP = settle(frame, fps, 26);
   return (
-    <AbsoluteFill style={{ ...centre, gap: u(30), padding: u(60) }}>
+    <AbsoluteFill style={{ ...centre, gap: u(30), ...safePadding(fr, u(60)) }}>
       {showLogo ? <Mark size={u(150)} delay={2} /> : null}
       <div
         style={{

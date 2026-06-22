@@ -69,6 +69,9 @@ const sceneBase = {
   durSec: z.number().positive(),
   // optional per-scene glow tint for the stage backdrop.
   glow: zColor().optional(),
+  // optional sound-off caption, pinned in the lower safe zone with a scrim so it
+  // stays legible on muted feeds. applies to every scene type.
+  caption: z.string().optional(),
 };
 
 export const titleSceneSchema = z.object({
@@ -103,7 +106,9 @@ export const deviceSceneSchema = z.object({
   frame: z.enum(['phone', 'browser', 'dashboard']).default('phone'),
   // screenshot in public/ (omit for the built-in dashboard variant).
   image: z.string().optional(),
-  caption: z.string().optional(),
+  // prominent headline shown beside the device (distinct from the sound-off
+  // `caption` on sceneBase, which pins in the lower safe zone).
+  headline: z.string().optional(),
   sub: z.string().optional(),
 });
 
@@ -143,10 +148,19 @@ export const sceneSchema = z.discriminatedUnion('type', [
   ctaSceneSchema,
 ]);
 
+// global caption behaviour. captions render by default; set enabled false to
+// suppress every scene's sound-off caption without touching the scenes.
+export const captionsSchema = z.object({
+  enabled: z.boolean().optional(),
+});
+
 export const configSchema = z.object({
   brand: brandSchema,
   fps: z.number().int().positive().default(30),
   formats: z.array(formatSchema),
+  captions: captionsSchema.optional(),
+  // dev-only: paint the per-format safe-area overlay for qa (off in real renders).
+  debugSafeArea: z.boolean().optional(),
   scenes: z.array(sceneSchema),
 });
 
@@ -155,6 +169,7 @@ export type Logo = z.infer<typeof logoSchema>;
 export type Brand = z.infer<typeof brandSchema>;
 export type Format = z.infer<typeof formatSchema>;
 export type IconName = z.infer<typeof iconNameSchema>;
+export type Captions = z.infer<typeof captionsSchema>;
 export type Scene = z.infer<typeof sceneSchema>;
 export type SceneType = Scene['type'];
 export type TitleScene = z.infer<typeof titleSceneSchema>;

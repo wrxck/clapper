@@ -44,8 +44,12 @@ encode() {
     local d fade
     d=$(dur "$src")
     fade=$(awk -v d="$d" 'BEGIN { f = d - 1.5; if (f < 0) f = 0; print f }')
+    # tail fade, then ebu r128 loudness normalisation to a -14 lufs target (the
+    # de-facto level for social feeds) so music sits consistently across clips and
+    # devices regardless of the source track's mastering.
     ffmpeg -y -i "$src" -i "$MUSIC" \
-      -filter_complex "[1:a]afade=t=out:st=${fade}:d=1.5[a]" -map 0:v -map "[a]" \
+      -filter_complex "[1:a]afade=t=out:st=${fade}:d=1.5,loudnorm=I=-14:TP=-1.5:LRA=11[a]" \
+      -map 0:v -map "[a]" \
       -c:v libx264 -preset slow -crf 19 -maxrate "$maxrate" -bufsize 20M \
       -pix_fmt yuv420p -profile:v high -movflags +faststart \
       -c:a aac -b:a 192k -shortest "$dst" -loglevel error

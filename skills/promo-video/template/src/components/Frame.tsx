@@ -133,7 +133,9 @@ const BrowserShell: React.FC<{
 };
 
 // ---- the synthetic dashboard (no screenshot) ----
-const Dashboard: React.FC = () => {
+// `centred` vertically centres the content as a group (for the tall phone shell);
+// otherwise the chart row fills the height (the shorter browser shell).
+const Dashboard: React.FC<{ centred?: boolean }> = ({ centred = false }) => {
   const brand = useBrand();
   const { display, text } = useFonts();
   const frame = useCurrentFrame();
@@ -152,6 +154,7 @@ const Dashboard: React.FC = () => {
         background: brand.bg,
         display: 'flex',
         flexDirection: 'column',
+        justifyContent: centred ? 'center' : 'flex-start',
         padding: '7%',
         gap: '5%',
       }}
@@ -159,7 +162,7 @@ const Dashboard: React.FC = () => {
       <div style={{ fontFamily: display, fontWeight: 640, fontSize: '7%', color: brand.ink, letterSpacing: '-0.02em' }}>
         Overview
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '6%', flex: 1 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6%', flex: centred ? undefined : 1 }}>
         <div style={{ position: 'relative', width: '36%', aspectRatio: '1' }}>
           <Ring size={120} progress={ringP} stroke={12} colour={brand.accent} />
           <div
@@ -228,7 +231,7 @@ export const Frame: React.FC<{
     return (
       <PhoneShell width={w} enter={enter} tilt={tilt}>
         <div style={{ position: 'absolute', inset: 0, background: brand.bg }}>
-          <Dashboard />
+          <Dashboard centred />
         </div>
       </PhoneShell>
     );

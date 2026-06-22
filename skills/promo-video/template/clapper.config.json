@@ -34,6 +34,7 @@
     { "id": "Square", "label": "1:1 instagram feed", "width": 1080, "height": 1080 },
     { "id": "Portrait", "label": "4:5 instagram portrait", "width": 1080, "height": 1350 }
   ],
+  "captions": { "enabled": true },
   "scenes": [
     {
       "type": "title",
@@ -41,21 +42,24 @@
       "glow": "rgba(110,168,254,0.10)",
       "showLogo": true,
       "words": ["Driftwell"],
-      "sub": "Focus, on autopilot."
+      "sub": "Focus, on autopilot.",
+      "caption": "Meet Driftwell - focus, on autopilot."
     },
     {
       "type": "title",
       "durSec": 3.4,
       "glow": "rgba(155,135,245,0.09)",
-      "words": ["Deep", "work,", "without", "the", "willpower."]
+      "words": ["Deep", "work,", "without", "the", "willpower."],
+      "caption": "Deep work, without the willpower."
     },
     {
       "type": "device",
       "durSec": 6.0,
       "glow": "rgba(110,168,254,0.10)",
       "frame": "dashboard",
-      "caption": "Your day, planned for you.",
-      "sub": "One calm view. Zero context-switching."
+      "headline": "Your day, planned for you.",
+      "sub": "One calm view. Zero context-switching.",
+      "caption": "One calm view plans your whole day."
     },
     {
       "type": "features",
@@ -66,7 +70,8 @@
         { "icon": "bolt", "title": "Auto-blocking", "desc": "Distractions muted the moment a session starts." },
         { "icon": "chart", "title": "Focus trends", "desc": "See your deepest hours and protect them." },
         { "icon": "sparkle", "title": "Smart breaks", "desc": "Rests timed to how hard you have been working." }
-      ]
+      ],
+      "caption": "Auto-blocking, focus trends and smart breaks."
     },
     {
       "type": "stat",
@@ -75,7 +80,8 @@
       "value": 2.4,
       "decimals": 1,
       "suffix": "x",
-      "label": "more deep-work hours in the first week"
+      "label": "more deep-work hours in the first week",
+      "caption": "2.4x more deep-work hours in week one."
     },
     {
       "type": "bullets",
@@ -86,7 +92,8 @@
         { "icon": "eye-off", "line": "No ads. No tracking." },
         { "icon": "lock", "line": "Encrypted, end to end." },
         { "icon": "cloud", "line": "Syncs across your devices." }
-      ]
+      ],
+      "caption": "No ads, no tracking, end-to-end encrypted."
     },
     {
       "type": "pricing",
@@ -94,7 +101,8 @@
       "glow": "rgba(155,135,245,0.09)",
       "price": "Free",
       "period": "for 14 days",
-      "sub": "Then 6 pounds a month, cancel anytime."
+      "sub": "Then 6 pounds a month, cancel anytime.",
+      "caption": "Free for 14 days, then 6 pounds a month."
     },
     {
       "type": "cta",
@@ -102,7 +110,8 @@
       "glow": "rgba(110,168,254,0.10)",
       "showLogo": true,
       "url": "driftwell.app",
-      "line": "Start your first deep-work session today."
+      "line": "Start your first deep-work session today.",
+      "caption": "Start today at driftwell.app."
     }
   ]
 }

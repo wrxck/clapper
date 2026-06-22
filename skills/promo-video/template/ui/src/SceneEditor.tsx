@@ -36,7 +36,7 @@ export const blankScene = (type: SceneType): Scene => {
         cards: [{ icon: 'bolt', title: 'Title', desc: 'Description.' }],
       };
     case 'device':
-      return { type, durSec: 5, frame: 'phone', caption: 'Caption', sub: '' };
+      return { type, durSec: 5, frame: 'phone', headline: 'Headline', sub: '' };
     case 'stat':
       return { type, durSec: 3, value: 100, suffix: '', label: 'Label' };
     case 'pricing':
@@ -77,6 +77,12 @@ export const SceneEditor: React.FC<{
       <div className="scene-body">
         <Num label="duration (s)" value={scene.durSec} step={0.1} min={0.5} onChange={(v) => set({ durSec: v })} />
         <Colour label="glow" value={scene.glow ?? ''} onChange={(v) => set({ glow: v })} />
+        <Text
+          label="caption (sound-off)"
+          value={scene.caption ?? ''}
+          onChange={(v) => set({ caption: v })}
+          placeholder="pinned lower-third line"
+        />
 
         {scene.type === 'title' ? (
           <>
@@ -163,7 +169,7 @@ export const SceneEditor: React.FC<{
           <>
             <Select label="frame" value={scene.frame} options={FRAMES} onChange={(v) => set({ frame: v as typeof scene.frame })} />
             <Text label="image (public/ path)" value={scene.image ?? ''} onChange={(v) => set({ image: v })} placeholder="screenshot.png" />
-            <Text label="caption" value={scene.caption ?? ''} onChange={(v) => set({ caption: v })} />
+            <Text label="headline" value={scene.headline ?? ''} onChange={(v) => set({ headline: v })} />
             <Text label="sub" value={scene.sub ?? ''} onChange={(v) => set({ sub: v })} />
           </>
         ) : null}
